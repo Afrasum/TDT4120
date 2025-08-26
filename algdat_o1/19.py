@@ -12,7 +12,7 @@ import random
 # kontrolleres ved Ã¥ juste pÃ¥ verdiene under.
 
 # Kontrollerer om det genereres tilfeldige instanser.
-generate_random_tests = False
+generate_random_tests = True
 # Antall tilfeldige tester som genereres
 random_tests = 10
 # Lavest mulig antall verdier i generert instans.
@@ -31,32 +31,23 @@ compact_print = False
 def sort(stack1, stack2, stack3):
     # Skriv koden din her
     # push, pop, empty, peeek
+    s1, s2, s3 = stack1, stack2, stack3
 
-    def check():
-        y = s2.peek() if not s2.empty() else 0
+    while not s1.empty():
+        x = s1.pop()  # 1 pop
 
-        if x >= y:
-            s2.push(x)
-        else:
+        # Flytt større elementer midlertidig til s3 (1 peek + 1 pop + 1 push per element som flyttes)
+        while (not s2.empty()) and (s2.peek() > x):
             s3.push(s2.pop())
-            check()
 
-        while s3.empty() is not True:
+        # Sett inn x på rett plass i s2 (1 push)
+        s2.push(x)
+
+        # Flytt alle elementene tilbake fra s3 til s2
+        while not s3.empty():
             s2.push(s3.pop())
 
-        return
-
-    s1 = stack1
-    s2 = stack2
-    s3 = stack3
-
-    x = 0
-    y = 0
-
-    while s1.empty() is not True:
-        x = s1.pop()
-        check()
-
+    # Til slutt tilbake til s1 (1 pop + 1 push per element)
     while not s2.empty():
         s1.push(s2.pop())
 
